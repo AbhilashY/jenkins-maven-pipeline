@@ -16,7 +16,7 @@ pipeline {
         stage('Package') {
             steps {
                 echo 'Packaging'
-               sh 'mvn package -DskipTests'
+              
             }
         }
         stage('Deploy') {
