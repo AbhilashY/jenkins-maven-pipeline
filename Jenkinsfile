@@ -1,22 +1,47 @@
-  pipeline {
+pipeline {
     agent any
-
-    tools{
-       maven 'localmaven' 
-    }
     stages {
-        stage('Build') { 
+        stage('Checkout') {
             steps {
-               sh 'mvn clean package' 
+                echo 'Checkout'
             }
-            post {
-               success {
-                    echo 'Now Archiving...'
-                    archiveArtifacts artifacts: '**/target/*.jar'
-                   }
-              } 
-          }
-
-
-  
+        }
+        stage('Build') {
+            steps {
+                echo 'Clean Build'
+              sh 'mvn clean package'
+            }
+        }
+      
+ 
+        stage('Package') {
+            steps {
+                echo 'Packaging'
+              
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo '## TODO DEPLOYMENT ##'
+            }
+        }
+    }
+    
+    post {
+        always {
+            echo 'JENKINS PIPELINE'
+        }
+        success {
+            echo 'JENKINS PIPELINE SUCCESSFUL'
+        }
+        failure {
+            echo 'JENKINS PIPELINE FAILED'
+        }
+        unstable {
+            echo 'JENKINS PIPELINE WAS MARKED AS UNSTABLE'
+        }
+        changed {
+            echo 'JENKINS PIPELINE STATUS HAS CHANGED SINCE LAST EXECUTION'
+        }
+    }
 }
